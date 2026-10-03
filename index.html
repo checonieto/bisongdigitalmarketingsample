@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bison Digital Marketing | Juegos y sitios web</title>
+<link rel="icon" href="bisondigitallogo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+  --font-d:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --font-b:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --bg:#EAF1EC; --surface:#FFFFFF; --ink:#0B2B26; --muted:#46605A; --line:#C4D5CC;
+  --brass:#A56F10; --btn-bg:#0E4A41; --btn-ink:#FFFFFF;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#06201D; --surface:#0C332E; --ink:#EAF4EF; --muted:#9DB8B0; --line:#1B4A43;
+    --brass:#E8B54A; --btn-bg:#E8B54A; --btn-ink:#0B1F1C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#06201D; --surface:#0C332E; --ink:#EAF4EF; --muted:#9DB8B0; --line:#1B4A43;
+  --brass:#E8B54A; --btn-bg:#E8B54A; --btn-ink:#0B1F1C;
+}
+*,*::before,*::after{box-sizing:inherit;margin:0}
+html{height:100%;scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+body{background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--font-b);-webkit-font-smoothing:antialiased;min-height:100%}
+h1,h2,h3{font-family:var(--font-d);line-height:1.05;letter-spacing:-.02em}
+a{color:inherit}
+[hidden]{display:none!important}
+a:focus-visible,button:focus-visible{outline:3px solid var(--brass);outline-offset:3px}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1200px;margin:auto;display:flex;align-items:center;gap:20px;padding:12px clamp(16px,4vw,40px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 1.2rem var(--font-d);letter-spacing:-.02em;margin-right:auto}
+.brand small{font:500 .95rem var(--font-b);color:var(--muted);letter-spacing:0}
+.brand img{height:40px;width:auto;border-radius:8px;display:block}
+.nav{display:flex;gap:22px}
+.nav a{text-decoration:none;font-weight:500;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+.lang{display:flex;border:2px solid var(--ink);border-radius:999px;padding:2px}
+.lang button{appearance:none;border:0;background:transparent;color:var(--ink);font:700 .85rem var(--font-b);padding:6px 14px;border-radius:999px;cursor:pointer;min-width:44px}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+@media(max-width:700px){.nav{display:none}.brand small{display:none}}
+
+/* Hero */
+.hero{max-width:1200px;margin:auto;display:grid;grid-template-columns:1.5fr .6fr;gap:clamp(28px,5vw,72px);align-items:center;padding:clamp(32px,6vw,84px) clamp(20px,4vw,40px)}
+.hero h1{font-weight:800;font-size:clamp(2.6rem,6.4vw,5.2rem);line-height:1;letter-spacing:-.035em}
+.hero p{margin-top:22px;max-width:46ch;font-size:1.2rem;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:999px;font:700 1rem var(--font-b);text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn-main{background:var(--btn-bg);color:var(--btn-ink)}
+.btn-ghost{border-color:var(--ink);color:var(--ink)}
+.btn:hover{transform:translateY(-2px)}
+.btn{transition:transform .15s}
+
+.board-wrap{justify-self:center;width:100%;max-width:250px}
+.board-frame{background:#0A4A3F;padding:12px;border-radius:20px;box-shadow:0 0 0 4px #E8B54A,0 24px 40px -22px rgba(0,0,0,.5);aspect-ratio:1}
+.board{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);height:100%;border-radius:14px;overflow:hidden;background:#0F6B5A}
+.cell{appearance:none;border:1px solid rgba(0,0,0,.3);background:#0F6B5A;padding:0;display:grid;place-items:center;cursor:pointer;perspective:400px}
+.cell:hover{background:#12806A}
+.cell:focus-visible{outline:3px solid #E8B54A;outline-offset:-3px}
+.disc{width:78%;aspect-ratio:1;position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.2,1);pointer-events:none}
+.disc.w{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 4px 8px rgba(0,0,0,.4)}
+.face.b{background:radial-gradient(circle at 35% 30%,#5a5a5a,#0b0b0b 72%)}
+.face.w{transform:rotateY(180deg);background:radial-gradient(circle at 35% 30%,#fff,#bfc9c4 78%)}
+.board-hint{text-align:center;margin-top:18px;font-size:.9rem;color:var(--muted)}
+.quick{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin-top:30px}
+.quick a{display:inline-flex;align-items:center;gap:9px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);text-decoration:none;font-weight:600;font-size:.95rem}
+.quick a:hover{border-color:var(--ink)}
+.quick i{width:12px;height:12px;border-radius:50%;background:var(--c);flex:none}
+@media(max-width:860px){.hero{grid-template-columns:1fr}.board-wrap{max-width:220px}}
+
+/* Games */
+.games-intro{max-width:1200px;margin:auto;padding:clamp(24px,4vw,48px) clamp(20px,4vw,40px) clamp(28px,4vw,48px)}
+.games-intro h2{font-size:clamp(2rem,4.4vw,3.2rem);font-weight:800}
+.games-intro p{margin-top:12px;color:var(--muted);max-width:56ch}
+.game{padding:clamp(48px,8vw,104px) clamp(20px,4vw,40px);color:#fff}
+.game-in{max-width:1200px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+.game.rev .art{order:2}
+.art svg{width:100%;height:auto;display:block;border-radius:26px;box-shadow:0 34px 60px -26px rgba(0,0,0,.65)}
+.game h3{font-weight:800;font-size:clamp(2rem,4.2vw,3.2rem)}
+.game p{margin-top:16px;max-width:50ch;color:rgba(255,255,255,.88)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:22px 0 30px}
+.chips li{padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.3);font-size:.92rem}
+.play{background:var(--accent);color:#161616}
+.game a:focus-visible{outline-color:var(--accent)}
+.g1{--accent:#F0BC52;background:linear-gradient(160deg,#0A3A33,#0E5246)}
+.g2{--accent:#FFBE6B;background:linear-gradient(160deg,#241A52,#3A2A6B)}
+.g3{--accent:#FF8A63;background:linear-gradient(160deg,#3A0F1C,#5B1A2C)}
+.g4{--accent:#F6C453;background:linear-gradient(160deg,#0C2A4D,#16457A)}
+@media(max-width:860px){.game-in{grid-template-columns:1fr}.game.rev .art{order:0}}
+
+/* Services */
+.services{max-width:1200px;margin:auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,72px);padding:clamp(56px,9vw,120px) clamp(20px,4vw,40px)}
+.services h2{font-size:clamp(2rem,4.4vw,3.4rem);font-weight:800}
+.services .lead{margin-top:18px;color:var(--muted);max-width:44ch}
+.bi{margin-top:26px;padding:16px 18px;border-radius:16px;background:var(--surface);border:1px solid var(--line);font-weight:500;max-width:44ch}
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px 30px;align-content:start}
+.svc{border-top:3px solid var(--brass);padding-top:18px}
+.svc svg{width:30px;height:30px;stroke:var(--brass);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.svc h3{font-size:1.3rem;margin:12px 0 8px;letter-spacing:-.01em}
+.svc p{color:var(--muted);font-size:1rem}
+@media(max-width:860px){.services{grid-template-columns:1fr}}
+@media(max-width:520px){.svc-grid{grid-template-columns:1fr}}
+
+.steps-wrap{background:var(--surface);border-block:1px solid var(--line)}
+.steps{max-width:1200px;margin:auto;padding:clamp(40px,7vw,80px) clamp(20px,4vw,40px)}
+.steps h2{font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:800}
+.steps ol{list-style:none;padding:0;margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.steps li{display:grid;gap:6px}
+.steps .n{font:800 3.4rem/1 var(--font-d);color:var(--brass)}
+.steps h3{font-size:1.4rem;letter-spacing:-.01em}
+.steps p{color:var(--muted)}
+@media(max-width:760px){.steps ol{grid-template-columns:1fr}}
+
+/* Contact */
+.contact{background:#06201D;color:#fff;padding:clamp(56px,9vw,112px) clamp(20px,4vw,40px);text-align:center}
+.contact h2{font-size:clamp(2rem,5vw,3.8rem);font-weight:800}
+.contact p{margin:16px auto 0;max-width:46ch;color:rgba(255,255,255,.8)}
+.contact .actions{justify-content:center}
+.logo-badge{display:inline-block;background:#fff;border-radius:20px;padding:10px;margin-bottom:26px;box-shadow:0 18px 40px -20px rgba(0,0,0,.6)}
+.logo-badge img{display:block;height:clamp(84px,14vw,120px);width:auto;border-radius:12px}
+.logo-foot{display:inline-block;margin-bottom:10px}
+.logo-foot img{display:block;height:44px;width:auto;border-radius:8px}
+.contact .btn{background:#E8B54A;color:#0B1F1C}
+.contact .btn.alt{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+.contact a:focus-visible{outline-color:#E8B54A}
+footer{background:#041512;color:rgba(255,255,255,.65);text-align:center;padding:22px 20px;font-size:.9rem}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#inicio" aria-label="Bison Digital Marketing">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#fff" stroke="#0B2B26" stroke-width="1.5"/><path d="M14 1a13 13 0 000 26z" fill="#111"/></svg>
+      <img src="bisondigitallogo.jpg" alt="" hidden onload="this.hidden=false;this.previousElementSibling.hidden=true">
+      <span>Bison <small>Digital Marketing</small></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#juegos" data-i18n="nav_games">Juegos</a>
+      <a href="#servicios" data-i18n="nav_services">Sitios web</a>
+      <a href="#contacto" data-i18n="nav_contact">Contacto</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div>
+      <h1 data-i18n="hero_title">Juegos que fortalecen la mente y el espíritu</h1>
+      <p data-i18n="hero_text">Cuatro juegos creados por Bison Digital Marketing para pensar, aprender y convivir. Ábrelos en tu navegador, sin descargar nada.</p>
+      <div class="actions">
+        <a class="btn btn-main" href="#juegos" data-i18n="hero_cta1">Ver los juegos</a>
+        <a class="btn btn-ghost" href="#servicios" data-i18n="hero_cta2">Quiero un sitio web</a>
+      </div>
+      <ul class="quick">
+        <li><a href="#g1" style="--c:#0F6B5A"><i></i><span data-i18n="g1_name">Bison Othello</span></a></li>
+        <li><a href="#g2" style="--c:#6B3A86"><i></i><span data-i18n="g2_name">El viaje a la Tierra Prometida</span></a></li>
+        <li><a href="#g3" style="--c:#C23A4F"><i></i><span data-i18n="g3_name">Ajedrez en Acción</span></a></li>
+        <li><a href="#g4" style="--c:#2F6DB5"><i></i><span data-i18n="g4_name">Odisea de las Escrituras</span></a></li>
+      </ul>
+    </div>
+    <div class="board-wrap">
+      <div class="board-frame"><div class="board" id="board"></div></div>
+      <p class="board-hint" data-i18n="board_hint">Toca una ficha y mira cómo se voltea el tablero.</p>
+    </div>
+  </section>
+
+  <section id="juegos">
+    <div class="games-intro">
+      <h2 data-i18n="games_title">Cuatro juegos, cuatro mundos</h2>
+      <p data-i18n="games_text">Cada uno se juega directo en el navegador, en celular o en computadora.</p>
+    </div>
+
+    <!-- 1 Othello -->
+    <article class="game g1" id="g1">
+      <div class="game-in">
+        <div class="art">
+          <svg viewBox="0 0 480 360" role="img" data-i18n-aria="g1_alt" aria-label="Tablero de Othello">
+            <defs>
+              <radialGradient id="ob" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#5a5a5a"/><stop offset="1" stop-color="#0b0b0b"/></radialGradient>
+              <radialGradient id="ow" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#bcc7c2"/></radialGradient>
+              <pattern id="ogrid" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="#0F6B5A"/><path d="M50 0H0V50" fill="none" stroke="#073F36" stroke-width="2"/></pattern>
+            </defs>
+            <rect width="480" height="360" fill="#0A3A33"/>
+            <g transform="translate(90 30)">
+              <rect x="-8" y="-8" width="316" height="316" rx="18" fill="#E8B54A"/>
+              <rect width="300" height="300" rx="10" fill="url(#ogrid)"/>
+              <g stroke="rgba(0,0,0,.35)" stroke-width="1.5">
+                <circle cx="125" cy="75" r="21" fill="url(#ob)"/>
+                <circle cx="175" cy="125" r="21" fill="url(#ob)"/>
+                <circle cx="125" cy="175" r="21" fill="url(#ob)"/>
+                <circle cx="225" cy="175" r="21" fill="url(#ob)"/>
+                <circle cx="75" cy="225" r="21" fill="url(#ob)"/>
+                <circle cx="175" cy="225" r="21" fill="url(#ob)"/>
+                <circle cx="125" cy="125" r="21" fill="url(#ow)"/>
+                <circle cx="175" cy="175" r="21" fill="url(#ow)"/>
+                <circle cx="225" cy="125" r="21" fill="url(#ow)"/>
+                <circle cx="125" cy="225" r="21" fill="url(#ow)"/>
+                <circle cx="75" cy="175" r="21" fill="url(#ow)"/>
+                <circle cx="275" cy="175" r="21" fill="url(#ow)"/>
+                <ellipse cx="175" cy="75" rx="8" ry="21" fill="url(#ow)"/>
+              </g>
+              <circle cx="225" cy="225" r="14" fill="none" stroke="#F0BC52" stroke-width="3" stroke-dasharray="5 6"/>
+              <circle cx="75" cy="125" r="14" fill="none" stroke="#F0BC52" stroke-width="3" stroke-dasharray="5 6"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <h3 data-i18n="g1_name">Bison Othello</h3>
+          <p data-i18n="g1_text">El clásico duelo de fichas, con el Bison Bot como rival, pistas cuando te atoras y comentarios divertidos para una rivalidad sana. Piensa dos jugadas adelante y voltea el tablero.</p>
+          <ul class="chips">
+            <li data-i18n="g1_c1">Mente y estrategia</li><li data-i18n="g1_c2">2 jugadores</li><li data-i18n="g1_c3">Contra el Bison Bot</li><li data-i18n="g1_c4">Pistas opcionales</li>
+          </ul>
+          <a class="btn play" href="https://checonieto.github.io/bisonothello/" target="_blank" rel="noopener" data-i18n="g1_cta">Jugar Bison Othello</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 Tierra Prometida -->
+    <article class="game g2 rev" id="g2">
+      <div class="game-in">
+        <div class="art">
+          <svg viewBox="0 0 480 360" role="img" data-i18n-aria="g2_alt" aria-label="Camino por el desierto al atardecer con una brújula dorada">
+            <defs>
+              <linearGradient id="csky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F1647"/><stop offset=".55" stop-color="#6B3A86"/><stop offset="1" stop-color="#F2994A"/></linearGradient>
+              <radialGradient id="csun"><stop offset="0" stop-color="#FFD27A" stop-opacity=".9"/><stop offset="1" stop-color="#FFD27A" stop-opacity="0"/></radialGradient>
+              <radialGradient id="cglow"><stop offset="0" stop-color="#FFD27A" stop-opacity=".6"/><stop offset="1" stop-color="#FFD27A" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="480" height="360" fill="url(#csky)"/>
+            <g fill="#fff" opacity=".8"><circle cx="40" cy="40" r="1.6"/><circle cx="90" cy="70" r="1.2"/><circle cx="210" cy="30" r="1.6"/><circle cx="270" cy="62" r="1.2"/><circle cx="400" cy="38" r="1.6"/><circle cx="440" cy="84" r="1.2"/><circle cx="330" cy="24" r="1.2"/><circle cx="20" cy="110" r="1.2"/></g>
+            <circle cx="340" cy="205" r="90" fill="url(#csun)"/>
+            <circle cx="340" cy="205" r="34" fill="#FFD27A"/>
+            <path d="M0 230Q90 190 180 225T360 220T480 205V360H0Z" fill="#8B3F5E"/>
+            <path d="M0 270Q120 225 240 262T480 250V360H0Z" fill="#5B2A57"/>
+            <path d="M0 322Q140 282 280 316T480 302V360H0Z" fill="#321A45"/>
+            <path d="M-10 352C110 320 120 292 220 282S330 264 300 250S370 240 372 234" fill="none" stroke="#FFE3A8" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 12"/>
+            <path d="M70 264L92 232L114 264Z" fill="#FFB86B"/><path d="M85 264L92 248L99 264Z" fill="#321A45"/>
+            <path d="M126 268L141 246L156 268Z" fill="#E58A3C"/>
+            <g transform="translate(130 100) rotate(-18)">
+              <circle r="46" fill="url(#cglow)"/>
+              <circle r="30" fill="#6A3F0E" stroke="#F2B35A" stroke-width="4"/>
+              <path d="M0-23L6 0H-6Z" fill="#FFD27A"/><path d="M0 23L6 0H-6Z" fill="#C98A2B"/>
+              <circle r="3.5" fill="#FFF1C9"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <h3 data-i18n="g2_name">El viaje a la Tierra Prometida</h3>
+          <p data-i18n="g2_text">Un juego de mesa digital basado en 1 Nefi. Recorre el desierto con tu familia, tira el dado, saca cartas y avanza hacia la tierra prometida.</p>
+          <ul class="chips">
+            <li data-i18n="g2_c1">Desarrollo espiritual</li><li data-i18n="g2_c2">2 a 6 jugadores</li><li data-i18n="g2_c3">Basado en 1 Nefi</li><li data-i18n="g2_c4">Dado y cartas</li>
+          </ul>
+          <a class="btn play" href="https://checonieto.github.io/juegocaminoalatierraprometida/" target="_blank" rel="noopener" data-i18n="g2_cta">Emprender el viaje</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3 Ajedrez en Accion -->
+    <article class="game g3" id="g3">
+      <div class="game-in">
+        <div class="art">
+          <svg viewBox="0 0 480 360" role="img" data-i18n-aria="g3_alt" aria-label="Dos peones de ajedrez chocando con una explosión en el centro">
+            <defs>
+              <linearGradient id="kbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B0B16"/><stop offset="1" stop-color="#6A1D31"/></linearGradient>
+              <g id="pawn"><circle cx="30" cy="18" r="14"/><path d="M23 31H37L35 44Q51 52 53 79H7Q9 52 25 44Z"/><rect x="1" y="79" width="58" height="12" rx="6"/></g>
+            </defs>
+            <rect width="480" height="360" fill="url(#kbg)"/>
+            <g>
+              <rect x="0" y="240" width="60" height="60" fill="#9AA6B2"/><rect x="60" y="240" width="60" height="60" fill="#3A2733"/><rect x="120" y="240" width="60" height="60" fill="#9AA6B2"/><rect x="180" y="240" width="60" height="60" fill="#3A2733"/><rect x="240" y="240" width="60" height="60" fill="#9AA6B2"/><rect x="300" y="240" width="60" height="60" fill="#3A2733"/><rect x="360" y="240" width="60" height="60" fill="#9AA6B2"/><rect x="420" y="240" width="60" height="60" fill="#3A2733"/>
+              <rect x="0" y="300" width="60" height="60" fill="#3A2733"/><rect x="60" y="300" width="60" height="60" fill="#9AA6B2"/><rect x="120" y="300" width="60" height="60" fill="#3A2733"/><rect x="180" y="300" width="60" height="60" fill="#9AA6B2"/><rect x="240" y="300" width="60" height="60" fill="#3A2733"/><rect x="300" y="300" width="60" height="60" fill="#9AA6B2"/><rect x="360" y="300" width="60" height="60" fill="#3A2733"/><rect x="420" y="300" width="60" height="60" fill="#9AA6B2"/>
+            </g>
+            <ellipse cx="106" cy="254" rx="46" ry="8" fill="rgba(0,0,0,.35)"/>
+            <ellipse cx="386" cy="254" rx="46" ry="8" fill="rgba(0,0,0,.35)"/>
+            <use href="#pawn" transform="translate(70 148) scale(1.2)" fill="#E9EEF2" stroke="#9AA6B2" stroke-width="1.5"/>
+            <use href="#pawn" transform="translate(350 148) scale(1.2)" fill="#1A1A22" stroke="#FF6B4A" stroke-width="2"/>
+            <polygon points="240,112 256,146 294,142 272,175 294,208 256,204 240,238 224,204 186,208 208,175 186,142 224,146" fill="#FF6B4A"/>
+            <polygon points="240,112 256,146 294,142 272,175 294,208 256,204 240,238 224,204 186,208 208,175 186,142 224,146" fill="#FFC857" transform="translate(240 175) scale(.55) translate(-240 -175)"/>
+            <g stroke="#FFC857" stroke-width="4" stroke-linecap="round"><path d="M160 108l-20-14"/><path d="M320 108l20-14"/><path d="M150 176h-22"/><path d="M330 176h22"/><path d="M160 244l-20 14" opacity="0"/></g>
+          </svg>
+        </div>
+        <div>
+          <h3 data-i18n="g3_name">Ajedrez en Acción</h3>
+          <p data-i18n="g3_text">Ajedrez con un giro: cada captura se resuelve con una pelea animada. Juega contra la computadora en tres niveles o contra un amigo, y deshaz jugadas para aprender.</p>
+          <ul class="chips">
+            <li data-i18n="g3_c1">Lógica y concentración</li><li data-i18n="g3_c2">Fácil, medio y difícil</li><li data-i18n="g3_c3">2 jugadores</li><li data-i18n="g3_c4">Deshacer jugada</li>
+          </ul>
+          <a class="btn play" href="https://checonieto.github.io/ajedrezenaccion/" target="_blank" rel="noopener" data-i18n="g3_cta">Jugar Ajedrez en Acción</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4 Odisea -->
+    <article class="game g4 rev" id="g4">
+      <div class="game-in">
+        <div class="art">
+          <svg viewBox="0 0 480 360" role="img" data-i18n-aria="g4_alt" aria-label="Camino de casillas hacia un templo dorado con un dado">
+            <defs>
+              <linearGradient id="osky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B2547"/><stop offset="1" stop-color="#3C7FD0"/></linearGradient>
+              <radialGradient id="tglow"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".75"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="480" height="360" fill="url(#osky)"/>
+            <g fill="#fff" opacity=".14"><ellipse cx="90" cy="70" rx="56" ry="16"/><ellipse cx="130" cy="84" rx="40" ry="12"/><ellipse cx="220" cy="130" rx="46" ry="12"/></g>
+            <circle cx="370" cy="110" r="120" fill="url(#tglow)"/>
+            <rect x="296" y="174" width="148" height="14" rx="3" fill="#FFE9A8"/>
+            <rect x="308" y="160" width="124" height="14" rx="3" fill="#FFF4D6"/>
+            <g fill="#FFF4D6"><rect x="322" y="104" width="14" height="56"/><rect x="350" y="104" width="14" height="56"/><rect x="378" y="104" width="14" height="56"/><rect x="406" y="104" width="14" height="56"/></g>
+            <rect x="308" y="94" width="124" height="10" rx="2" fill="#FFE9A8"/>
+            <polygon points="304,94 370,56 436,94" fill="#F6C453"/>
+            <rect x="366" y="28" width="8" height="30" fill="#F6C453"/>
+            <circle cx="370" cy="22" r="8" fill="#FFD54A"/>
+            <g stroke="rgba(0,0,0,.18)" stroke-width="2">
+              <rect x="26" y="296" width="38" height="38" rx="10" fill="#F6C453" transform="rotate(-6 45 315)"/>
+              <rect x="81" y="281" width="38" height="38" rx="10" fill="#7FB5FF" transform="rotate(5 100 300)"/>
+              <rect x="136" y="289" width="38" height="38" rx="10" fill="#FFFFFF" transform="rotate(-4 155 308)"/>
+              <rect x="191" y="271" width="38" height="38" rx="10" fill="#F58C6B" transform="rotate(6 210 290)"/>
+              <rect x="236" y="243" width="38" height="38" rx="10" fill="#F6C453" transform="rotate(-5 255 262)"/>
+              <rect x="271" y="213" width="38" height="38" rx="10" fill="#7FB5FF" transform="rotate(4 290 232)"/>
+              <rect x="286" y="181" width="38" height="38" rx="10" fill="#FFFFFF" opacity="0"/>
+            </g>
+            <circle cx="210" cy="284" r="10" fill="#E4572E" stroke="#fff" stroke-width="3"/>
+            <g transform="translate(405 292) rotate(14)">
+              <rect x="-30" y="-30" width="60" height="60" rx="12" fill="#fff"/>
+              <g fill="#12365F"><circle cx="-14" cy="-14" r="5"/><circle cx="14" cy="-14" r="5"/><circle cx="0" cy="0" r="5"/><circle cx="-14" cy="14" r="5"/><circle cx="14" cy="14" r="5"/></g>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <h3 data-i18n="g4_name">Odisea de las Escrituras</h3>
+          <p data-i18n="g4_text">Un juego de tablero para repasar Dominio de las Escrituras del Seminario. Tira el dado, responde y recorre el camino hasta el Templo, solo o por equipos, con panel para el maestro.</p>
+          <ul class="chips">
+            <li data-i18n="g4_c1">Estudio de escrituras</li><li data-i18n="g4_c2">Individual o por equipos</li><li data-i18n="g4_c3">Panel del maestro</li><li data-i18n="g4_c4">Elige los libros a repasar</li>
+          </ul>
+          <a class="btn play" href="https://checonieto.github.io/odiseadelasescrituras/" target="_blank" rel="noopener" data-i18n="g4_cta">Comenzar la odisea</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section id="servicios">
+    <div class="services">
+      <div>
+        <h2 data-i18n="svc_title">Si hicimos esto, también podemos hacer tu sitio web</h2>
+        <p class="lead" data-i18n="svc_text">Bison Digital Marketing diseña y publica sitios web y herramientas interactivas para negocios, escuelas, maestros y creadores. Todo se ve bien en el celular y está pensado para que tus clientes te encuentren.</p>
+        <p class="bi" data-i18n="svc_bi">Y sí, tu sitio puede ser bilingüe. Prueba el botón ES / EN de arriba.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+          <h3 data-i18n="svc1_t">Sitios web a la medida</h3>
+          <p data-i18n="svc1_d">Páginas claras y atractivas que presentan tu negocio, tus servicios o tu proyecto.</p>
+        </div>
+        <div class="svc">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10v5M4.5 12.5h5"/><circle cx="16" cy="11" r="1"/><circle cx="18.5" cy="14" r="1"/></svg>
+          <h3 data-i18n="svc2_t">Juegos y herramientas interactivas</h3>
+          <p data-i18n="svc2_d">Juegos, cuestionarios y apps para enseñar, capacitar o entretener a tu audiencia.</p>
+        </div>
+        <div class="svc">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg>
+          <h3 data-i18n="svc3_t">Que te encuentren</h3>
+          <p data-i18n="svc3_d">SEO y perfil de Google Business para atraer clientes de tu zona.</p>
+        </div>
+        <div class="svc">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v3l12 5V6L3 11z"/><path d="M18 9a4 4 0 010 6"/></svg>
+          <h3 data-i18n="svc4_t">Redes sociales</h3>
+          <p data-i18n="svc4_d">Campañas y contenido visual: infografías, presentaciones y publicaciones.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-wrap">
+      <div class="steps">
+        <h2 data-i18n="steps_title">Así trabajamos</h2>
+        <ol>
+          <li><span class="n">1</span><h3 data-i18n="s1_t">Conversamos</h3><p data-i18n="s1_d">Nos cuentas qué necesitas y a quién quieres llegar.</p></li>
+          <li><span class="n">2</span><h3 data-i18n="s2_t">Diseñamos</h3><p data-i18n="s2_d">Te mostramos el sitio y lo ajustamos contigo.</p></li>
+          <li><span class="n">3</span><h3 data-i18n="s3_t">Publicamos</h3><p data-i18n="s3_d">Lo ponemos en línea y te acompañamos después.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <span class="logo-badge" hidden><img src="bisondigitallogo.jpg" alt="Bison Digital Marketing" onload="this.parentNode.hidden=false"></span>
+    <h2 data-i18n="ct_title">Cuéntanos tu proyecto</h2>
+    <p data-i18n="ct_text">Escríbenos y te respondemos muy rápido con una propuesta.</p>
+    <div class="actions">
+      <a class="btn" id="ctMail" hidden data-i18n="ct_mail">Enviar un correo</a>
+      <a class="btn alt" id="ctWeb" target="_blank" rel="noopener" data-i18n="ct_web">Visitar nuestro sitio</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="logo-foot" hidden><img src="bisondigitallogo.jpg" alt="Bison Digital Marketing" onload="this.parentNode.hidden=false"></span>
+  <p data-i18n="foot">© 2026 Bison Digital Marketing. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+const CONTACT = { email: "bisonmarketingdigital@gmail.com", web: "https://bisondigitalmarketing.com/" };
+
+const I18N = {
+  es: {
+    doc_title:"Bison Digital Marketing | Juegos y sitios web",
+    nav_games:"Juegos", nav_services:"Sitios web", nav_contact:"Contacto",
+    hero_title:"Juegos que fortalecen la mente y el espíritu",
+    hero_text:"Cuatro juegos creados por Bison Digital Marketing para pensar, aprender y convivir. Ábrelos en tu navegador, sin descargar nada.",
+    hero_cta1:"Ver los juegos", hero_cta2:"Quiero un sitio web",
+    board_hint:"Toca una ficha y mira cómo se voltea el tablero.", disc:"Ficha",
+    games_title:"Cuatro juegos, cuatro mundos",
+    games_text:"Cada uno se juega directo en el navegador, en celular o en computadora.",
+    g1_name:"Bison Othello",
+    g1_text:"El clásico duelo de fichas, con el Bison Bot como rival, pistas cuando te atoras y comentarios divertidos para una rivalidad sana. Piensa dos jugadas adelante y voltea el tablero.",
+    g1_c1:"Mente y estrategia", g1_c2:"2 jugadores", g1_c3:"Contra el Bison Bot", g1_c4:"Pistas opcionales",
+    g1_cta:"Jugar Bison Othello", g1_alt:"Tablero de Othello con fichas negras y blancas",
+    g2_name:"El viaje a la Tierra Prometida",
+    g2_text:"Un juego de mesa digital basado en 1 Nefi. Recorre el desierto con tu familia, tira el dado, saca cartas y avanza hacia la tierra prometida.",
+    g2_c1:"Desarrollo espiritual", g2_c2:"2 a 6 jugadores", g2_c3:"Basado en 1 Nefi", g2_c4:"Dado y cartas",
+    g2_cta:"Emprender el viaje", g2_alt:"Camino por el desierto al atardecer con una brújula dorada",
+    g3_name:"Ajedrez en Acción",
+    g3_text:"Ajedrez con un giro: cada captura se resuelve con una pelea animada. Juega contra la computadora en tres niveles o contra un amigo, y deshaz jugadas para aprender.",
+    g3_c1:"Lógica y concentración", g3_c2:"Fácil, medio y difícil", g3_c3:"2 jugadores", g3_c4:"Deshacer jugada",
+    g3_cta:"Jugar Ajedrez en Acción", g3_alt:"Dos peones de ajedrez chocando con una explosión en el centro",
+    g4_name:"Odisea de las Escrituras",
+    g4_text:"Un juego de tablero para repasar Dominio de las Escrituras del Seminario. Tira el dado, responde y recorre el camino hasta el Templo, solo o por equipos, con panel para el maestro.",
+    g4_c1:"Estudio de escrituras", g4_c2:"Individual o por equipos", g4_c3:"Panel del maestro", g4_c4:"Elige los libros a repasar",
+    g4_cta:"Comenzar la odisea", g4_alt:"Camino de casillas hacia un templo dorado con un dado",
+    svc_title:"Si hicimos esto, también podemos hacer tu sitio web",
+    svc_text:"Bison Digital Marketing diseña y publica sitios web y herramientas interactivas para negocios, escuelas, maestros y creadores. Todo se ve bien en el celular y está pensado para que tus clientes te encuentren.",
+    svc_bi:"Y sí, tu sitio puede ser bilingüe. Prueba el botón ES / EN de arriba.",
+    svc1_t:"Sitios web a la medida", svc1_d:"Páginas claras y atractivas que presentan tu negocio, tus servicios o tu proyecto.",
+    svc2_t:"Juegos y herramientas interactivas", svc2_d:"Juegos, cuestionarios y apps para enseñar, capacitar o entretener a tu audiencia.",
+    svc3_t:"Que te encuentren", svc3_d:"SEO y perfil de Google Business para atraer clientes de tu zona.",
+    svc4_t:"Redes sociales", svc4_d:"Campañas y contenido visual: infografías, presentaciones y publicaciones.",
+    steps_title:"Así trabajamos",
+    s1_t:"Conversamos", s1_d:"Nos cuentas qué necesitas y a quién quieres llegar.",
+    s2_t:"Diseñamos", s2_d:"Te mostramos el sitio y lo ajustamos contigo.",
+    s3_t:"Publicamos", s3_d:"Lo ponemos en línea y te acompañamos después.",
+    ct_title:"Cuéntanos tu proyecto", ct_text:"Escríbenos y te respondemos muy rápido con una propuesta.",
+    ct_mail:"Escríbenos por correo", ct_web:"Visitar nuestro sitio",
+    ct_msg:"Hola, vi sus juegos y quiero un sitio web.", ct_subj:"Quiero un sitio web",
+    foot:"© 2026 Bison Digital Marketing. Todos los derechos reservados."
+  },
+  en: {
+    doc_title:"Bison Digital Marketing | Games and websites",
+    nav_games:"Games", nav_services:"Websites", nav_contact:"Contact",
+    hero_title:"Games that sharpen the mind and lift the spirit",
+    hero_text:"Four games built by Bison Digital Marketing to think, learn and play together. Open them in your browser, nothing to download.",
+    hero_cta1:"See the games", hero_cta2:"I want a website",
+    board_hint:"Tap a disc and watch the board flip.", disc:"Disc",
+    games_title:"Four games, four worlds",
+    games_text:"Each one plays right in the browser, on your phone or computer.",
+    g1_name:"Bison Othello",
+    g1_text:"The classic disc duel, with the Bison Bot as your rival, hints when you get stuck, and playful banter for friendly rivalry. Think two moves ahead and turn the board around.",
+    g1_c1:"Mind and strategy", g1_c2:"2 players", g1_c3:"Vs the Bison Bot", g1_c4:"Optional hints",
+    g1_cta:"Play Bison Othello", g1_alt:"Othello board with black and white discs",
+    g2_name:"The Journey to the Promised Land",
+    g2_text:"A digital board game based on 1 Nephi. Cross the wilderness with your family, roll the dice, draw cards and make your way to the promised land.",
+    g2_c1:"Spiritual growth", g2_c2:"2 to 6 players", g2_c3:"Based on 1 Nephi", g2_c4:"Dice and cards",
+    g2_cta:"Begin the journey", g2_alt:"A desert path at sunset with a golden compass",
+    g3_name:"Chess in Action",
+    g3_text:"Chess with a twist: every capture plays out as an animated brawl. Take on the computer at three levels or a friend, and undo moves to learn.",
+    g3_c1:"Logic and focus", g3_c2:"Easy, medium and hard", g3_c3:"2 players", g3_c4:"Undo move",
+    g3_cta:"Play Chess in Action", g3_alt:"Two chess pawns colliding with a burst in the middle",
+    g4_name:"Scripture Odyssey",
+    g4_text:"A board game for reviewing Seminary Scripture Mastery. Roll the dice, answer, and travel the path to the Temple, solo or in teams, with a teacher panel.",
+    g4_c1:"Scripture study", g4_c2:"Solo or in teams", g4_c3:"Teacher panel", g4_c4:"Choose the books to review",
+    g4_cta:"Start the odyssey", g4_alt:"A path of tiles leading to a golden temple, with a die",
+    svc_title:"If we built this, we can build your website",
+    svc_text:"Bison Digital Marketing designs and publishes websites and interactive tools for businesses, schools, teachers and creators. Everything looks great on a phone and is built so your customers can find you.",
+    svc_bi:"And yes, your site can be bilingual. Try the ES / EN button above.",
+    svc1_t:"Custom websites", svc1_d:"Clear, attractive pages that present your business, your services or your project.",
+    svc2_t:"Games and interactive tools", svc2_d:"Games, quizzes and apps to teach, train or entertain your audience.",
+    svc3_t:"Get found", svc3_d:"SEO and Google Business setup to attract customers in your area.",
+    svc4_t:"Social media", svc4_d:"Campaigns and visual content: infographics, presentations and posts.",
+    steps_title:"How we work",
+    s1_t:"We talk", s1_d:"You tell us what you need and who you want to reach.",
+    s2_t:"We design", s2_d:"We show you the site and adjust it with you.",
+    s3_t:"We publish", s3_d:"We put it online and stay with you afterward.",
+    ct_title:"Tell us about your project", ct_text:"Write to us and we reply super fast with a proposal.",
+    ct_mail:"Email us", ct_web:"Visit our website",
+    ct_msg:"Hi, I saw your games and I want a website.", ct_subj:"I want a website",
+    foot:"© 2026 Bison Digital Marketing. All rights reserved."
+  }
+};
+
+let lang = "es";
+const cells = [];
+
+function apply(l){
+  lang = l;
+  const t = I18N[l];
+  document.documentElement.lang = l;
+  document.title = t.doc_title;
+  document.querySelectorAll("[data-i18n]").forEach(el => { if (t[el.dataset.i18n] != null) el.textContent = t[el.dataset.i18n]; });
+  document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t[el.dataset.i18nAria]); });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+  cells.forEach(c => c.el.setAttribute("aria-label", t.disc + " " + (c.r + 1) + "," + (c.c + 1)));
+  const mail = document.getElementById("ctMail");
+  document.getElementById("ctWeb").href = CONTACT.web;
+  if (CONTACT.email) { mail.hidden = false; mail.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(t.ct_subj); } else { mail.hidden = true; }
+  try { localStorage.setItem("bison-lang", l); } catch (e) {}
+}
+
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => apply(b.dataset.lang)));
+
+/* Othello hero board */
+const N = 6, boardEl = document.getElementById("board");
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "cell";
+  b.innerHTML = '<span class="disc"><span class="face b"></span><span class="face w"></span></span>';
+  const disc = b.firstChild;
+  cells.push({ r, c, el: b, disc });
+  b.addEventListener("click", () => {
+    cells.forEach(o => {
+      const dr = o.r - r, dc = o.c - c;
+      if (Math.abs(dr) <= 1 && Math.abs(dc) <= 1) {
+        const d = Math.hypot(dr, dc) * 80;
+        setTimeout(() => o.disc.classList.toggle("w"), reduce ? 0 : d);
+      }
+    });
+  });
+  boardEl.appendChild(b);
+}
+/* Opening wave: the single orchestrated moment */
+setTimeout(() => {
+  cells.forEach(o => {
+    const d = Math.hypot(o.r - 2.5, o.c - 2.5) * 110;
+    setTimeout(() => { if ((o.r + o.c) % 2 === 0) o.disc.classList.add("w"); }, reduce ? 0 : d);
+  });
+}, reduce ? 0 : 500);
+
+/* Initial language: ?lang=en, saved choice, otherwise Spanish */
+let start = "es";
+try {
+  const q = new URLSearchParams(location.search).get("lang");
+  const saved = localStorage.getItem("bison-lang");
+  if (q === "en" || q === "es") start = q; else if (saved === "en" || saved === "es") start = saved;
+} catch (e) {}
+apply(start);
+</script>
+</body>
+</html>
